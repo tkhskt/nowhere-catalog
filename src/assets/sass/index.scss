@@ -1,0 +1,534 @@
+$color-black: #1b1a1a;
+$color-gray: #c3c3c3;
+$color-gray-faded: #c2c2c2;
+$color-purple: #6e2b98;
+
+$z-loading: 200;
+$z-sidebar: 100;
+$z-bg_text: 50;
+$z-canvas: 60;
+$z-description: 150;
+$z-main: 70;
+
+@font-face {
+  font-family: 'monument-black';
+  src: url(/assets/font/MonumentExtended-Black.ttf);
+}
+
+@font-face {
+  font-family: 'monument-regular';
+  src: url(/assets/font/MonumentExtended-Regular.ttf);
+}
+
+html {
+  overflow: hidden;
+}
+
+body {
+  //   width: 100vw;
+  //   height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: $color-black;
+}
+
+.loading {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  left: 0;
+  z-index: $z-loading;
+  justify-content: center;
+  align-items: center;
+  background: $color-black;
+  .title {
+    position: relative;
+    font-size: 24px;
+    color: $color-gray;
+    padding: 4px;
+    font-family: cadogan, sans-serif;
+    &::after {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: $color-black;
+      right: 0;
+      top: 0;
+      content: '';
+      animation: show 0.5s linear forwards 0.2s;
+    }
+  }
+}
+
+@keyframes show {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+
+#canvas {
+  position: fixed;
+  top: 0;
+  z-index: $z-canvas;
+  width: 100vw;
+  height: 100vh;
+}
+
+.side-bar {
+  position: absolute;
+  left: 0;
+  color: $color-gray;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  text-decoration: none;
+  font-family: 'monument-regular';
+  z-index: $z-sidebar;
+  height: 100%;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  margin-left: 34px;
+  transform-origin: center;
+  transform: rotate(180deg);
+}
+
+.barcode {
+  position: absolute;
+  left: 99vw;
+  top: 12vh;
+  height: 30vh;
+}
+
+.youtube {
+  display: inline;
+  position: relative;
+  text-decoration: none;
+  color: $color-gray-faded;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.title {
+  color: $color-gray-faded;
+  font-size: 18px;
+  user-select: none;
+}
+
+.twitter {
+  position: relative;
+  display: inline;
+  text-decoration: none;
+  color: $color-gray-faded;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.sns-line {
+  position: absolute;
+  background: $color-gray;
+  content: '';
+  height: 0;
+  width: 1px;
+  left: 50%;
+  top: 0%;
+  transition: height 0.2s ease-in;
+  &--show {
+    height: 100%;
+    transition: height 0.2s ease-out;
+  }
+}
+
+.background {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  &__text {
+    position: relative;
+    width: 72vw;
+    height: 75vh;
+    z-index: $z-bg_text;
+  }
+}
+
+.nowhere-text {
+  position: absolute;
+  right: 0;
+  user-select: none;
+  &--reverse {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transform-origin: center;
+    transform: rotate(180deg);
+    user-select: none;
+  }
+}
+
+.main {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  z-index: $z-main;
+}
+
+.jacket-img {
+  height: 51vh;
+  width: 48vw;
+  background: #ffffff;
+  opacity: 0;
+}
+
+.track-jacket {
+  position: relative;
+}
+
+.page {
+  position: absolute;
+  display: flex;
+  bottom: -36px;
+  right: 0;
+  font-size: 24px;
+  color: $color-gray;
+  font-family: 'allumi-std';
+  align-items: center;
+  .page__current {
+    height: 24px;
+    overflow: hidden;
+    display: flex;
+  }
+  &__current {
+    font-size: 0;
+  }
+  .tens {
+    display: block;
+    font-size: 24px;
+    height: 24px;
+    padding: 0;
+  }
+  &__all {
+    height: 24px;
+    padding: 0;
+  }
+  .ones {
+    display: block;
+    font-size: 24px;
+    height: 24px;
+    padding: 0;
+  }
+  .indicator-line {
+    height: 1px;
+    width: 3.7vw;
+    margin-left: 0.8vw;
+    margin-right: 0.8vw;
+    background-color: $color-gray;
+  }
+}
+
+.track-name {
+  max-width: 88vw;
+  position: absolute;
+}
+
+.name-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  .name {
+    color: $color-gray;
+    font-family: 'monument-black';
+    font-size: 8.3vw;
+  }
+}
+
+.name--cursive {
+  position: absolute;
+  bottom: -1vw;
+  left: 0;
+  font-family: cadogan, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 4.1vw;
+  color: $color-purple;
+}
+
+.nowhere-background {
+  font-family: 'monument-black';
+  color: $color-black;
+  font-size: 4.16vw;
+  line-height: 0.78em;
+  text-shadow: 1px 1px 0 $color-gray-faded, -1px 1px 0 $color-gray-faded,
+    1px -1px 0 $color-gray-faded, -1px -1px 0 $color-gray-faded;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.scroll-nav {
+  position: absolute;
+  bottom: 6.3vh;
+  right: 6.8vw;
+  z-index: 40;
+  width: 7vw;
+  height: 7vw;
+  max-width: 150px;
+  max-height: 150px;
+  transform-origin: center;
+  animation: rotate 10s infinite linear;
+}
+
+.cls-1 {
+  font-size: 14px;
+  fill: #c2c2c2;
+  user-select: none;
+  font-family: 'monument-black';
+}
+
+.description {
+  z-index: $z-description;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  opacity: 0;
+  display: none;
+  &__header {
+    position: fixed;
+    padding: 34px;
+    font-size: 24px;
+    color: $color-gray;
+    font-family: 'cadogan';
+    z-index: 50;
+  }
+  &__container {
+    position: fixed;
+    display: flex;
+    padding: 14vh 7vw;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+  }
+  &__bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+  }
+  &__header {
+    position: fixed;
+  }
+  &__nav {
+    position: fixed;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    margin-left: 34px;
+    transform-origin: center;
+    transform: rotate(180deg);
+    z-index: 50;
+    user-select: none;
+  }
+  &__info {
+    position: relative;
+    margin-left: 4vw;
+    flex-grow: 1;
+    margin-right: 10%;
+    color: $color-gray;
+    height: 50vw;
+    max-height: 72vmin;
+  }
+  &__name-container {
+    position: relative;
+    color: $color-gray;
+    font-family: 'monument-black';
+    font-size: 3.5vw;
+    margin-top: 1vw;
+  }
+}
+
+.content {
+  width: 100vw;
+  height: 100vh;
+}
+
+.album__text {
+  color: $color-gray;
+  font-family: 'monument-regular';
+  font-size: 18px;
+}
+
+.album__img {
+  position: relative;
+  width: 50vw;
+  height: 50vw;
+  max-height: 72vmin;
+  max-width: 72vmin;
+  //   height: 72vmin;
+  //   width: 72vmin;
+  //   background-position: center;
+  //   background-size: cover;
+  //   background-image: url('https://i.scdn.co/image/ab67616d0000b27381933197343ba91eba034611');
+}
+
+.img {
+  width: 50vw;
+  height: 50vw;
+  max-height: 72vmin;
+  max-width: 72vmin;
+  background-position: center;
+  background-size: cover;
+  background-image: url('https://i.scdn.co/image/ab67616d0000b27381933197343ba91eba034611');
+}
+
+.img__page {
+  position: absolute;
+  right: -2.5vmin;
+  bottom: -5vmin;
+  color: $color-gray;
+  line-height: 80%;
+  font-size: 6.3vw;
+  font-family: 'monument-regular';
+}
+
+.img__card {
+  position: absolute;
+  width: 44vmin;
+  height: 44vmin;
+  right: -3vmin;
+  bottom: -5vmin;
+  background: $color-purple;
+  z-index: -1;
+}
+
+.bg {
+  &__img {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    filter: grayscale(100%) blur(10px);
+    background-image: url('https://i.scdn.co/image/ab67616d0000b27381933197343ba91eba034611');
+    background-position: center;
+    background-size: cover;
+    margin: -20px;
+    &::after {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      content: '';
+      background-color: #000000;
+      opacity: 54%;
+    }
+    &__nowhere {
+      position: absolute;
+    }
+  }
+  &__black {
+    position: fixed;
+    right: 0;
+    background-color: $color-black;
+    width: 80vw;
+    height: 100vh;
+  }
+  &__nowhere {
+    position: fixed;
+    right: 0;
+    font-size: 16vh;
+    color: $color-black;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: 'monument-black';
+    -webkit-text-stroke-width: 2px;
+    line-height: 90%;
+    opacity: 70%;
+    -webkit-text-stroke-color: #434343;
+  }
+}
+
+.info {
+  &__number {
+    font-size: 0.93vw;
+    font-family: 'monument-regular';
+    color: $color-gray;
+  }
+  &__release-date {
+    font-size: 0.93vw;
+    margin-top: 1.4vw;
+    font-family: 'monument-regular';
+  }
+  &__divider {
+    width: 100%;
+    height: 1px;
+    margin-top: 1.4vw;
+    background: $color-gray;
+  }
+  &__list {
+    margin-top: 2.9vw;
+    font-size: 0.7vw;
+    font-family: 'monument-regular';
+    list-style: none;
+  }
+  &__listen {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 0.93vw;
+    font-family: 'monument-regular';
+    color: $color-gray;
+  }
+}
+
+.listen__link {
+  position: relative;
+  cursor: pointer;
+  &::before {
+    position: absolute;
+    cursor: default;
+    content: '';
+    top: 45%;
+    height: 1px;
+    width: 7vw;
+    left: -7.5vw;
+    background-color: $color-gray;
+  }
+}
+
+.name__main {
+  //   z-index: 100;
+}
+.name__shadow {
+  position: absolute;
+  top: 1vw;
+  left: 0.63vw;
+  z-index: -1;
+  user-select: none;
+  color: #3c3b3b;
+}
