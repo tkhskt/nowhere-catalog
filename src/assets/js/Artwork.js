@@ -62,10 +62,9 @@ export default class Artwork {
   }
 
   openDescription() {
-    const track = this.tracks[this.currentTrackIndex];
+    const album = this.tracks[this.currentTrackIndex];
     const description = new Description(
-      track.id,
-      track.date,
+      album,
       { current: this.currentTrackIndex, all: this.tracks.length },
       document.querySelector('.description'),
       this.loading
