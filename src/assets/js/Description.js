@@ -27,7 +27,7 @@ export default class Description {
   }
 
   async getTrack(id) {
-    const resp = await axios.get('https://us-central1-nowhere-web.cloudfunctions.net/track?i', {
+    const resp = await axios.get('https://us-central1-nowhere-web.cloudfunctions.net/track', {
       params: {
         id: id,
       },
