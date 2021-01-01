@@ -30,6 +30,7 @@ const loadData = async (callback) => {
       name: doc.data().name,
       image: doc.data().img,
       date: doc.data().date,
+      url: doc.data().url,
     };
   });
   callback(tracks);

@@ -1,4 +1,5 @@
 $color-black: #1b1a1a;
+$color-black-faded: #434343;
 $color-gray: #c3c3c3;
 $color-gray-faded: #c2c2c2;
 $color-purple: #6e2b98;
@@ -9,6 +10,11 @@ $z-bg_text: 50;
 $z-canvas: 60;
 $z-description: 150;
 $z-main: 70;
+
+@mixin borderText($color: #fff, $size: 2px) {
+  text-shadow: $size $size 0 $color, (-$size) $size 0 $color,
+  $size (-$size) 0 $color, (-$size) (-$size) 0 $color;
+}
 
 @font-face {
   font-family: 'monument-black';
@@ -268,8 +274,8 @@ body {
   color: $color-black;
   font-size: 4.16vw;
   line-height: 0.78em;
-  text-shadow: 1px 1px 0 $color-gray-faded, -1px 1px 0 $color-gray-faded,
-    1px -1px 0 $color-gray-faded, -1px -1px 0 $color-gray-faded;
+  // @include borderText($color-gray-faded, 1px);
+  @include borderText($color-gray-faded, 0.5px);
 }
 
 @keyframes rotate {
@@ -315,11 +321,12 @@ body {
   display: none;
   &__header {
     position: fixed;
+    display: flex;
+    width: 100%;
     padding: 34px;
-    font-size: 24px;
-    color: $color-gray;
-    font-family: 'cadogan';
     z-index: 50;
+    justify-content: space-between;
+    align-items: center;
   }
   &__container {
     position: fixed;
@@ -336,9 +343,6 @@ body {
     height: 100vh;
     width: 100vw;
   }
-  &__header {
-    position: fixed;
-  }
   &__nav {
     position: fixed;
     height: 100%;
@@ -347,7 +351,7 @@ body {
     align-items: center;
     writing-mode: vertical-rl;
     text-orientation: mixed;
-    margin-left: 34px;
+    left: 34px;
     transform-origin: center;
     transform: rotate(180deg);
     z-index: 50;
@@ -368,6 +372,46 @@ body {
     font-family: 'monument-black';
     font-size: 3.5vw;
     margin-top: 1vw;
+  }
+}
+
+.header {
+ &__title {
+  font-size: 24px;
+  color: $color-gray;
+  font-family: 'cadogan';
+ }
+ &__close {
+   position: relative;
+  //  margin-right: 14vh;
+   width: 48px;
+   height: 48px;
+   cursor: pointer;
+ }
+}
+
+.close__line {
+  &--1 {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    top: 50%;
+    transform-origin: center;
+    transform: rotate(45deg);
+    background-color: $color-gray;
+    will-change: transform;
+  }
+  &--2 {
+    position: absolute;
+    display: block;
+    width: 2px;
+    height: 100%;
+    left: 50%;
+    transform-origin: center;
+    transform: rotate(45deg);
+    background-color: $color-gray;
+    will-change: transform;
   }
 }
 
@@ -437,15 +481,13 @@ body {
     background-position: center;
     background-size: cover;
     margin: -20px;
-    &::after {
-      position: absolute;
+    &--filter {
+      position: fixed;
       left: 0;
       top: 0;
       width: 100vw;
       height: 100vh;
-      content: '';
-      background-color: #000000;
-      opacity: 54%;
+      background-color: rgba(0,0,0,0.54);
     }
     &__nowhere {
       position: absolute;
@@ -458,18 +500,25 @@ body {
     width: 80vw;
     height: 100vh;
   }
-  &__nowhere {
+  &__nowhere-wrapper {
     position: fixed;
     right: 0;
+    will-change: transform;
+
+  }
+  &__nowhere-item {
     font-size: 16vh;
     color: $color-black;
     writing-mode: vertical-rl;
     text-orientation: mixed;
     font-family: 'monument-black';
-    -webkit-text-stroke-width: 2px;
-    line-height: 90%;
+    @include borderText($color-black-faded, 2px);
+    line-height: 95%;
     opacity: 70%;
-    -webkit-text-stroke-color: #434343;
+    transition: color 0.2s linear, text-shadow 0.2s linear;
+    &--hover {
+      color: $color-black-faded;
+    }
   }
 }
 
@@ -492,7 +541,7 @@ body {
   }
   &__list {
     margin-top: 2.9vw;
-    font-size: 0.7vw;
+    font-size: 0.93vw;
     font-family: 'monument-regular';
     list-style: none;
   }
@@ -500,15 +549,21 @@ body {
     position: absolute;
     bottom: 0;
     right: 0;
-    font-size: 0.93vw;
+    font-size: 1.2vw;
     font-family: 'monument-regular';
     color: $color-gray;
   }
 }
 
+.list_item {
+  margin-bottom: 0.7vw;
+}
+
 .listen__link {
   position: relative;
   cursor: pointer;
+  text-decoration: none;
+  color: $color-gray;
   &::before {
     position: absolute;
     cursor: default;

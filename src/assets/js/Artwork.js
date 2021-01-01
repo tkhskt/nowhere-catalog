@@ -31,19 +31,22 @@ export default class Artwork {
     this.currentTrackIndex = 0;
     this.changeTrackInProgress = false;
     this.changeTextInProgress = false;
+    this.openDescriptionInProgress = false;
 
     this.canvas = document.getElementById('canvas');
     const title = document.getElementById('track-name');
     this.loading = new Loading(document.querySelector('.loading'));
     this.title = new Title(title, () => {
       if (this.changeTextInProgress) return;
+      this.openDescriptionInProgress = true;
       this.loading.slideIn(() => {
+        this.openDescriptionInProgress = false;
         this.openDescription();
       });
     });
     this.title.setText(this.tracks[0].name);
     this.page = new Page(document.getElementById('page'), this.tracks.length);
-
+    this.description = null;
     this.loadImages(this.init.bind(this));
   }
 
@@ -63,11 +66,14 @@ export default class Artwork {
 
   openDescription() {
     const album = this.tracks[this.currentTrackIndex];
-    const description = new Description(
+    this.description = new Description(
       album,
       { current: this.currentTrackIndex, all: this.tracks.length },
       document.querySelector('.description'),
-      this.loading
+      this.loading,
+      () => {
+        this.description = null;
+      }
     );
   }
 
@@ -188,6 +194,9 @@ export default class Artwork {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.size.windowW, this.size.windowH);
     this.composer.setSize(this.size.windowW, this.size.windowH);
+    if(this.description != null) {
+      this.description.resize()
+    }
   }
 
   mouseMove(e) {
@@ -197,7 +206,7 @@ export default class Artwork {
   }
 
   scroll(e) {
-    if (this.changeTrackInProgress) return;
+    if (this.changeTrackInProgress || this.description != null || this.openDescriptionInProgress) return;
     const currentScroll = Math.max(this.prevScroll + e.deltaY, 0);
     if (Math.abs(e.deltaY) > window.innerHeight * 0.05) {
       // update track
