@@ -1,5 +1,5 @@
 import Artwork from './Artwork';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import Layout from './Layout';
 import 'firebase/firestore';
 
@@ -15,15 +15,14 @@ const initFirebase = () => {
     messagingSenderId: '959660492119',
     appId: '1:959660492119:web:fd45e239c1ab467d66aa12',
   };
-
   if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig)
   }
 };
 
 const loadData = async (callback) => {
   const db = firebase.firestore();
-  const result = await db.collection('spotify').get();
+  const result = await db.collection('spotify').orderBy('date').get();
   const tracks = result.docs.map((doc) => {
     return {
       id: doc.data().id,
