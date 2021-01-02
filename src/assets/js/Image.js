@@ -1,10 +1,8 @@
 import * as THREE from 'three';
-import { TweenMax as TM, Power2, Power3, Expo } from 'gsap/all';
-// import { SplitText as ST } from './vendors/gsap/SplitText';
+import { TweenMax as TM } from 'gsap/all';
 import vertexShader from '../glsl/shader.vert';
 import fragmentShader from '../glsl/shader.frag';
-import { clamp, getRatio, wrap, ev } from './utils';
-import { Vector2 } from 'three';
+import { isMobile } from './utils';
 
 export default class Image {
   constructor($el, scene, textures) {
@@ -94,9 +92,6 @@ export default class Image {
     this.mainImage.addEventListener('mouseleave', () => {
       this.onPointerLeave();
     });
-    // window.addEventListener('mousemove', (e) => {
-    //   this.onMouseMove(e);
-    // });
   }
 
   changeTrack(trackIndex, isNext, doOnComplete) {
@@ -129,15 +124,15 @@ export default class Image {
   events
   --*/
 
-  onPointerEnter() {}
+  onPointerEnter() { }
 
-  onPointerLeave() {}
+  onPointerLeave() { }
 
   onMouseMove(x, y) {
-    // if (this.isZoomed || this.hasClicked || APP.Layout.isMobile) return;
-
-    this.mouse.x = x;
-    this.mouse.y = y;
+    if(!isMobile()) {
+      this.mouse.x = x;
+      this.mouse.y = y;
+    }
   }
 
   resize() {
@@ -155,7 +150,8 @@ export default class Image {
   }
 
   update() {
-    if (this.changeTrackInProgress) {
+    if (isMobile()) {
+      return
     }
     this.uniforms.u_mouse.value = this.mouse;
   }

@@ -1,6 +1,6 @@
 const { default: axios } = require('axios');
 import RollingText from './RollingText';
-import { TweenMax as TM, Expo } from 'gsap/all';
+import { TweenMax as TM } from 'gsap/all';
 
 export default class Description {
   constructor(album, number, $el, loading, onHide) {
@@ -17,6 +17,8 @@ export default class Description {
       backgroundImage: $el.querySelector('.bg__img'),
       date: $el.querySelector('.info__release-date'),
       link: $el.querySelector('.listen__link'),
+      linkMobile: $el.querySelector('.listen__link--mobile'),
+      linkLine: $el.querySelector('.link-line'),
       number: $el.querySelector('.img__page'),
       indicator: $el.querySelector('.info__number'),
       list: $el.querySelector('.info__list'),
@@ -26,6 +28,7 @@ export default class Description {
     };
     this.line1Anim = null;
     this.line2Anim = null;
+    this.linkLineAnim - null;
     this.getTrack(album.id);
     this.rollingText = new RollingText($el);
     this.bindEvent();
@@ -33,21 +36,16 @@ export default class Description {
   }
 
   bindEvent() {
-    this.$els.link.addEventListener('mouseover', () => {
-      this.rollingText.hover();
-    });
-    this.$els.link.addEventListener('mouseleave', () => {
-      this.rollingText.leave();
-    });
-    this.$els.closeButton.addEventListener('mouseover', () => {
-      this.hoverClose();
-    });
-    this.$els.closeButton.addEventListener('mouseleave', () => {
-      this.leaveClose();
-    });
-    this.$els.closeButton.addEventListener('click', () => {
-      this.hide();
-    });
+    this.hoverLinkFunc = this.hoverLink.bind(this);
+    this.leaveLinkFunc = this.leaveLink.bind(this);
+    this.hoverCloseFunc = this.hoverClose.bind(this);
+    this.leaveCloseFunc = this.leaveClose.bind(this);
+    this.clickCloseFunc = this.hide.bind(this);
+    this.$els.link.addEventListener('mouseenter', this.hoverLinkFunc);
+    this.$els.link.addEventListener('mouseleave', this.leaveLinkFunc);
+    this.$els.closeButton.addEventListener('mouseenter', this.hoverCloseFunc);
+    this.$els.closeButton.addEventListener('mouseleave', this.leaveCloseFunc);
+    this.$els.closeButton.addEventListener('click', this.clickCloseFunc);
   }
 
   async getTrack(id) {
@@ -72,6 +70,7 @@ export default class Description {
     this.$els.backgroundImage.style.backgroundImage = `url(${this.album.image})`;
     this.$els.date.innerText = 'release - ' + this.album.date.replace(/-/g, '/');
     this.$els.link.href = this.album.url;
+    this.$els.linkMobile.href = this.album.url;
     this.$els.number.innerText = this.paddingNumber(this.current);
     this.$els.indicator.innerText = `${this.paddingNumber(this.current)}/${this.paddingNumber(
       this.all
@@ -128,6 +127,32 @@ export default class Description {
     })
   }
 
+  hoverLink() {
+    this.rollingText.hover();
+    if (this.linkLineAnim != null) {
+      this.linkLineAnim.kill();
+    }
+    this.$els.linkLine.style.cursor = 'pointer';
+    this.linkLineAnim = TM.to(this.$els.linkLine, {
+      duration: 0.3,
+      left: '0',
+      width: '100%'
+    })
+  }
+
+  leaveLink() {
+    this.rollingText.leave();
+    if (this.linkLineAnim != null) {
+      this.linkLineAnim.kill();
+    }
+    this.$els.linkLine.style.cursor = 'default';
+    this.linkLineAnim = TM.to(this.$els.linkLine, {
+      duration: 0.3,
+      left: '-7.5vw',
+      width: '7vw',
+    });
+  }
+
   hide() {
     TM.to(this.$els.container, {
       duration: 0.5,
@@ -135,10 +160,28 @@ export default class Description {
       onComplete: () => {
         this.rollingText.hide();
         this.clearTracks();
+        this.removeListeners();
+        this.resetElem();
         this.$els.container.style.display = 'none';
         this.onHide();
       }
     })
+  }
+
+  resetElem() {
+    this.$els.linkLine.style.cursor = 'default';
+    this.$els.linkLine.style.left = '-7.5vw';
+    this.$els.linkLine.style.width = '7vw';
+    this.$els.closeLine1.style.transform = 'rotate(45deg)';
+    this.$els.closeLine2.style.transform = 'rotate(45deg)';
+  }
+
+  removeListeners() {
+    this.$els.link.removeEventListener('mouseenter', this.hoverLinkFunc);
+    this.$els.link.removeEventListener('mouseleave', this.leaveLinkFunc);
+    this.$els.closeButton.removeEventListener('mouseenter', this.hoverCloseFunc);
+    this.$els.closeButton.removeEventListener('mouseleave', this.leaveCloseFunc);
+    this.$els.closeButton.removeEventListener('click', this.clickCloseFunc);
   }
 
   paddingNumber(number) {

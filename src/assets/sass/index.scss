@@ -256,19 +256,18 @@ body {
   @include mq() {
     position: fixed;
     display: flex;
-    padding: 7vw;
     top: 0;
     width: 100vw;
     height: 0;
     z-index: $z-mobile-menu;
     background-color: $color-black;
-    // justify-content: center;
     align-items: center;
   }
 }
 
 .mobile-social-list {
   opacity: 0;
+  padding: 7vw;
   &__item {
     font-size: 7vw;
     text-decoration: none;
@@ -509,13 +508,15 @@ body {
   }
   &__info {
     position: relative;
-    margin-left: 4vw;
     flex-grow: 1;
+    margin-left: 4vw;
     margin-right: 10%;
+    padding-top: 3vh;
     color: $color-gray;
     height: 50vw;
     max-height: 72vmin;
     @include mq() {
+      padding-top: 0;
       margin: 13vw 0 0 0;
     }
   }
@@ -524,7 +525,7 @@ body {
     color: $color-gray;
     font-family: 'monument-black';
     font-size: 3.5vw;
-    margin-top: 1vw;
+    margin-top: 0.9vw;
     @include mq() {
       font-size: 9vw;
       margin-top: 2vw;
@@ -782,7 +783,11 @@ body {
   cursor: pointer;
   text-decoration: none;
   color: $color-gray;
-  &::before {
+  &--mobile {
+    color: $color-gray;
+    text-decoration: none;
+  }
+  .link-line {
     position: absolute;
     cursor: default;
     content: '';

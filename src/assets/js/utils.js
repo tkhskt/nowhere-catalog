@@ -48,3 +48,5 @@ export const ev = (eventName, data, once = false) => {
   const e = new CustomEvent(eventName, { detail: data }, { once });
   document.dispatchEvent(e);
 };
+
+export const isMobile = () => window.matchMedia('(max-width: 767px)').matches;

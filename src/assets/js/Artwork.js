@@ -10,6 +10,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import Page from './Page';
+import { isMobile } from './utils';
 
 export default class Artwork {
   constructor(tracks) {
@@ -50,7 +51,7 @@ export default class Artwork {
     this.mobileMenu = new MobileMenu(
       document.querySelector('.mobile-header'),
       document.querySelector('.mobile-menu')
-      );
+    );
     this.description = null;
     this.loadImages(this.init.bind(this));
   }
@@ -95,10 +96,10 @@ export default class Artwork {
   setSnsHover() {
     const twitter = document.querySelector('.twitter');
     const youtube = document.querySelector('.youtube');
-    twitter.addEventListener('mouseover', () => {
+    twitter.addEventListener('mouseenter', () => {
       twitter.querySelector('.sns-line').classList.add('sns-line--show');
     });
-    youtube.addEventListener('mouseover', () => {
+    youtube.addEventListener('mouseenter', () => {
       youtube.querySelector('.sns-line').classList.add('sns-line--show');
     });
     twitter.addEventListener('mouseleave', () => {
@@ -199,7 +200,7 @@ export default class Artwork {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.size.windowW, this.size.windowH);
     this.composer.setSize(this.size.windowW, this.size.windowH);
-    if(this.description != null) {
+    if (this.description != null) {
       this.description.resize()
     }
   }
@@ -266,11 +267,12 @@ export default class Artwork {
 
   render() {
     this.image.update();
-    this.getMouseSpeed();
-    this.customPass.uniforms.uMouse.value = this.followMouse;
-    // this.customPass.uniforms.uVelo.value = this.settings.velo;
-    this.customPass.uniforms.uVelo.value = Math.min(this.targetSpeed, 0.05);
-    this.targetSpeed *= 0.999;
+    if (!isMobile()) {
+      this.getMouseSpeed();
+      this.customPass.uniforms.uMouse.value = this.followMouse;
+      this.customPass.uniforms.uVelo.value = Math.min(this.targetSpeed, 0.05);
+      this.targetSpeed *= 0.999;
+    }
     this.composer.render(this.scene, this.camera);
   }
 }
