@@ -10,6 +10,7 @@ export default class Description {
     this.loading = loading;
     this.$els = {
       container: $el,
+      scrollWrapper: $el.querySelector('.description__container'),
       title: $el.querySelector('.name__main'),
       shadow: $el.querySelector('.name__shadow'),
       image: $el.querySelector('.img'),
@@ -23,6 +24,8 @@ export default class Description {
       closeLine1: $el.querySelector('.close__line--1'),
       closeLine2: $el.querySelector('.close__line--2'),
     };
+    this.line1Anim = null;
+    this.line2Anim = null;
     this.getTrack(album.id);
     this.rollingText = new RollingText($el);
     this.bindEvent();
@@ -56,6 +59,7 @@ export default class Description {
     this.setText(resp.data);
     this.$els.container.style.opacity = 1;
     this.$els.container.style.display = 'flex';
+    this.$els.scrollWrapper.scrollTop = 0;
     this.loading.slideOut(() => { });
   }
 
@@ -95,22 +99,30 @@ export default class Description {
   }
 
   hoverClose() {
-    TM.to(this.$els.closeLine1, {
+    if (this.line1Anim != null && this.line2Anim != null) {
+      this.line1Anim.kill();
+      this.line2Anim.kill();
+    }
+    this.line1Anim = TM.to(this.$els.closeLine1, {
       duration: 0.3,
       rotate: -30,
     })
-    TM.to(this.$els.closeLine2, {
+    this.line2Anim = TM.to(this.$els.closeLine2, {
       duration: 0.3,
       rotate: 120,
     })
   }
 
   leaveClose() {
-    TM.to(this.$els.closeLine1, {
+    if (this.line1Anim != null && this.line2Anim != null) {
+      this.line1Anim.kill();
+      this.line2Anim.kill();
+    }
+    this.line1Anim = TM.to(this.$els.closeLine1, {
       duration: 0.3,
       rotate: 45,
     })
-    TM.to(this.$els.closeLine2, {
+    this.line2Anim = TM.to(this.$els.closeLine2, {
       duration: 0.3,
       rotate: 45,
     })

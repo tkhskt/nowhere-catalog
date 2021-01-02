@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import Image from './Image';
 import Title from './Title';
 import Loading from './Loading';
+import MobileMenu from './MobileMenu';
 import Description from './Description';
 import vert from '../glsl/shader.vert';
 import postShader from '../glsl/post.frag';
@@ -46,6 +47,10 @@ export default class Artwork {
     });
     this.title.setText(this.tracks[0].name);
     this.page = new Page(document.getElementById('page'), this.tracks.length);
+    this.mobileMenu = new MobileMenu(
+      document.querySelector('.mobile-header'),
+      document.querySelector('.mobile-menu')
+      );
     this.description = null;
     this.loadImages(this.init.bind(this));
   }

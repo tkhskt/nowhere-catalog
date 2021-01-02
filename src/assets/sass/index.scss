@@ -8,22 +8,41 @@ $z-loading: 200;
 $z-sidebar: 100;
 $z-bg_text: 50;
 $z-canvas: 60;
+$z-scroll-nav: 80;
+$z-mobile-header: 100;
+$z-mobile-menu: 90;
 $z-description: 150;
 $z-main: 70;
+
+$font-size-description: 0.93vw;
+$font-size-description-mobile: 4vw;
+
+$breakpoints: (
+  'sm': 'screen and (max-width: 399px)',
+  'md': 'screen and (max-width: 767px)',
+  'lg': 'screen and (max-width: 999px)',
+  'xl': 'screen and (max-width: 1119px)',
+);
 
 @mixin borderText($color: #fff, $size: 2px) {
   text-shadow: $size $size 0 $color, (-$size) $size 0 $color,
   $size (-$size) 0 $color, (-$size) (-$size) 0 $color;
 }
 
+@mixin mq($breakpoint: md) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
 @font-face {
   font-family: 'monument-black';
-  src: url(/assets/font/MonumentExtended-Black.ttf);
+  src: url(../font/MonumentExtended-Black.ttf);
 }
 
 @font-face {
   font-family: 'monument-regular';
-  src: url(/assets/font/MonumentExtended-Regular.ttf);
+  src: url(../font/MonumentExtended-Regular.ttf);
 }
 
 html {
@@ -101,13 +120,20 @@ body {
   margin-left: 34px;
   transform-origin: center;
   transform: rotate(180deg);
+  @include mq() {
+    display: none;
+  }
 }
 
 .barcode {
   position: absolute;
+  display: inline-block;
   left: 99vw;
   top: 12vh;
   height: 30vh;
+  @include mq() {
+    display: none;
+  }
 }
 
 .youtube {
@@ -161,6 +187,9 @@ body {
     width: 72vw;
     height: 75vh;
     z-index: $z-bg_text;
+    @include mq() {
+      width: 90vw;
+    }
   }
 }
 
@@ -175,6 +204,81 @@ body {
     transform-origin: center;
     transform: rotate(180deg);
     user-select: none;
+  }
+}
+
+.mobile-header {
+  display: none;
+  z-index: $z-mobile-header;
+  @include mq() {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    padding: 7vw;
+    left: 0;
+    top: 0;
+    justify-content: space-between;
+    align-items: center;
+    &__title {
+      // display: inline-block;
+      font-size: 5vw;
+      font-family: 'cadogan';
+      color: $color-gray;
+    }
+    &__button {
+      position: relative;
+      height: 40px;
+      width: 40px;
+    }
+    .button__line--1 {
+      position: absolute;
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      top: 14px;
+      transform-origin: center;
+      background-color: $color-gray;
+    }
+    .button__line--2 {
+      position: absolute;
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      bottom: 14px;
+      transform-origin: center;
+      background-color: $color-gray;
+    }
+  }
+}
+
+.mobile-content {
+  display: none;
+  @include mq() {
+    position: fixed;
+    display: flex;
+    padding: 7vw;
+    top: 0;
+    width: 100vw;
+    height: 0;
+    z-index: $z-mobile-menu;
+    background-color: $color-black;
+    // justify-content: center;
+    align-items: center;
+  }
+}
+
+.mobile-social-list {
+  opacity: 0;
+  &__item {
+    font-size: 7vw;
+    text-decoration: none;
+    list-style-type: none;
+    margin-bottom: 7vw;
+    a {
+      color: $color-gray;
+      text-decoration: none;
+      font-family: 'monument-regular';
+    }
   }
 }
 
@@ -194,6 +298,10 @@ body {
   width: 48vw;
   background: #ffffff;
   opacity: 0;
+  @include mq() {
+    height: 60vh;
+    width: 70vw;
+  }
 }
 
 .track-jacket {
@@ -209,6 +317,9 @@ body {
   color: $color-gray;
   font-family: 'allumi-std';
   align-items: center;
+  @include mq() {
+    display: none;
+  }
   .page__current {
     height: 24px;
     overflow: hidden;
@@ -243,8 +354,16 @@ body {
 }
 
 .track-name {
+  display: block;
+  // width: auto;
   max-width: 88vw;
   position: absolute;
+  @include mq() {
+    display: flex;
+    // width: 95vw;
+    max-width: 100vw;
+    justify-content: center;
+  }
 }
 
 .name-container {
@@ -252,9 +371,14 @@ body {
   display: inline-block;
   cursor: pointer;
   .name {
+    word-break: break-all;
+    hyphens: manual;
     color: $color-gray;
     font-family: 'monument-black';
     font-size: 8.3vw;
+    @include mq() {
+      font-size: 10vw;
+    }
   }
 }
 
@@ -267,6 +391,10 @@ body {
   font-style: normal;
   font-size: 4.1vw;
   color: $color-purple;
+  @include mq() {
+    font-size: 5.5vw;
+    bottom: -3vw;
+  }
 }
 
 .nowhere-background {
@@ -276,6 +404,9 @@ body {
   line-height: 0.78em;
   // @include borderText($color-gray-faded, 1px);
   @include borderText($color-gray-faded, 0.5px);
+  @include mq() {
+    font-size: 4vmax;
+  }
 }
 
 @keyframes rotate {
@@ -298,6 +429,14 @@ body {
   max-height: 150px;
   transform-origin: center;
   animation: rotate 10s infinite linear;
+  z-index: $z-scroll-nav;
+  @include mq() {
+    max-width: auto;
+    max-height: auto;
+    width: 25vw;
+    height: 25vw;
+    // bottom: 15vh;
+  }
 }
 
 .cls-1 {
@@ -327,6 +466,9 @@ body {
     z-index: 50;
     justify-content: space-between;
     align-items: center;
+    @include mq() {
+      padding: 7vw;
+    }
   }
   &__container {
     position: fixed;
@@ -335,6 +477,14 @@ body {
     width: 100%;
     height: 100%;
     align-items: center;
+    @include mq() {
+      padding: 25vw 7vw 5vw 7vw;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      justify-content: center;
+      overflow: scroll;
+      // align-items: center;
+    }
   }
   &__bg {
     position: fixed;
@@ -365,6 +515,9 @@ body {
     color: $color-gray;
     height: 50vw;
     max-height: 72vmin;
+    @include mq() {
+      margin: 13vw 0 0 0;
+    }
   }
   &__name-container {
     position: relative;
@@ -372,6 +525,10 @@ body {
     font-family: 'monument-black';
     font-size: 3.5vw;
     margin-top: 1vw;
+    @include mq() {
+      font-size: 9vw;
+      margin-top: 2vw;
+    }
   }
 }
 
@@ -380,6 +537,9 @@ body {
   font-size: 24px;
   color: $color-gray;
   font-family: 'cadogan';
+  @include mq() {
+    font-size: 5vw;
+  }
  }
  &__close {
    position: relative;
@@ -387,6 +547,10 @@ body {
    width: 48px;
    height: 48px;
    cursor: pointer;
+   @include mq() {
+    width: 40px;
+    height: 40px;
+   }
  }
 }
 
@@ -401,6 +565,9 @@ body {
     transform: rotate(45deg);
     background-color: $color-gray;
     will-change: transform;
+    @include mq() {
+      height: 1px;
+    }
   }
   &--2 {
     position: absolute;
@@ -412,6 +579,9 @@ body {
     transform: rotate(45deg);
     background-color: $color-gray;
     will-change: transform;
+    @include mq() {
+      width: 1px;
+    }
   }
 }
 
@@ -424,6 +594,9 @@ body {
   color: $color-gray;
   font-family: 'monument-regular';
   font-size: 18px;
+  @include mq() {
+    display: none;
+  }
 }
 
 .album__img {
@@ -432,11 +605,12 @@ body {
   height: 50vw;
   max-height: 72vmin;
   max-width: 72vmin;
-  //   height: 72vmin;
-  //   width: 72vmin;
-  //   background-position: center;
-  //   background-size: cover;
-  //   background-image: url('https://i.scdn.co/image/ab67616d0000b27381933197343ba91eba034611');
+  @include mq() {
+    width: 100%;
+    height: auto;
+    max-width: none;
+    max-height: none;
+  }
 }
 
 .img {
@@ -447,6 +621,12 @@ body {
   background-position: center;
   background-size: cover;
   background-image: url('https://i.scdn.co/image/ab67616d0000b27381933197343ba91eba034611');
+  @include mq() {
+    width: 100%;
+    height: auto;
+    max-width: none;
+    max-height: none;
+  }
 }
 
 .img__page {
@@ -457,6 +637,9 @@ body {
   line-height: 80%;
   font-size: 6.3vw;
   font-family: 'monument-regular';
+  @include mq() {
+    font-size: 18vw;
+  }
 }
 
 .img__card {
@@ -467,6 +650,10 @@ body {
   bottom: -5vmin;
   background: $color-purple;
   z-index: -1;
+  @include mq() {
+    width: 60vmin;
+    height: 60vmin;
+  }
 }
 
 .bg {
@@ -524,26 +711,40 @@ body {
 
 .info {
   &__number {
-    font-size: 0.93vw;
+    font-size: $font-size-description;
     font-family: 'monument-regular';
     color: $color-gray;
+    @include mq() {
+      font-size: $font-size-description-mobile;
+    }
   }
   &__release-date {
-    font-size: 0.93vw;
+    font-size: $font-size-description;
     margin-top: 1.4vw;
     font-family: 'monument-regular';
+    @include mq() {
+      margin-top: 3vw;
+      font-size: $font-size-description-mobile;
+    }
   }
   &__divider {
     width: 100%;
     height: 1px;
     margin-top: 1.4vw;
     background: $color-gray;
+    @include mq() {
+      margin-top: 3vw;
+    }
   }
   &__list {
     margin-top: 2.9vw;
-    font-size: 0.93vw;
+    font-size: $font-size-description;
     font-family: 'monument-regular';
     list-style: none;
+    @include mq() {
+      font-size: $font-size-description-mobile;
+      margin-top: 6vw;
+    }
   }
   &__listen {
     position: absolute;
@@ -552,11 +753,28 @@ body {
     font-size: 1.2vw;
     font-family: 'monument-regular';
     color: $color-gray;
+    @include mq() {
+      display: none;
+    }
+    &--mobile {
+      display: none;
+      @include mq() {
+        display: block;
+        bottom: 0;
+        color: $color-gray;
+        margin-top: 10vw;
+        font-size: 7vw;
+        font-family: 'monument-regular';
+      }
+    }
   }
 }
 
 .list_item {
   margin-bottom: 0.7vw;
+  @include mq() {
+    margin-bottom: 2vw;
+  }
 }
 
 .listen__link {
