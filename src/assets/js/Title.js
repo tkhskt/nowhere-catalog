@@ -1,5 +1,4 @@
-import { TweenMax as TM, Power2, Power3, Expo } from 'gsap/all';
-// import { SplitText as ST } from './SplitText';
+import { TweenMax as TM, Expo } from 'gsap/all';
 
 export default class Title {
   constructor($el, onClick) {

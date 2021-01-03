@@ -1,4 +1,4 @@
-import { TweenMax as TM, TimelineMax, Expo } from 'gsap/all';
+import { TweenMax as TM, TimelineMax } from 'gsap/all';
 
 export default class Loading {
   constructor($el) {
