@@ -47,6 +47,7 @@ $breakpoints: (
 
 html {
   overflow: hidden;
+  background: $color-black;
 }
 
 body {
@@ -748,7 +749,7 @@ body {
     list-style: none;
     @include mq() {
       font-size: $font-size-description-mobile;
-      margin-top: 6vw;
+      margin-top: 8vw;
     }
   }
   &__listen {
