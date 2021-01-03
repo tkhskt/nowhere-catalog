@@ -35,6 +35,10 @@ export default class Artwork {
     this.changeTextInProgress = false;
     this.openDescriptionInProgress = false;
 
+    // mobile scroll
+    this.startY = 0;
+    this.touch = false;
+
     this.canvas = document.getElementById('canvas');
     const title = document.getElementById('track-name');
     this.loading = new Loading(
@@ -103,6 +107,29 @@ export default class Artwork {
     window.addEventListener('wheel', (e) => {
       this.scroll(e);
     });
+    window.addEventListener('touchstart', this.onTouchStart.bind(this), {
+      passive: true,
+    });
+    window.addEventListener('touchend', this.onTouchEnd.bind(this));
+    window.addEventListener('touchmove', this.onTouchMove.bind(this), {
+      passive: true,
+    });
+  }
+
+  onTouchStart(e) {
+    this.startY = e.touches[0].pageY;
+  }
+  onTouchMove(e) {
+    if (e.changedTouches[0].pageY - this.startY > 15) {
+      this.touch = true;
+    }
+  }
+  onTouchEnd(e) {
+    const endY = e.changedTouches[0].pageY;
+    this.touch = false;
+    if (Math.abs(endY - this.startY) > 30) {
+      this.scroll({ deltaY: (window.innerHeight * endY) / Math.abs(endY) });
+    }
   }
 
   setSnsHover() {
@@ -213,6 +240,10 @@ export default class Artwork {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.size.windowW, this.size.windowH);
     this.composer.setSize(this.size.windowW, this.size.windowH);
+    this.customPass.uniforms.resolution.value = new THREE.Vector2(
+      1,
+      window.innerHeight / window.innerWidth
+    );
     if (this.description != null) {
       this.description.resize();
     }
@@ -281,8 +312,8 @@ export default class Artwork {
 
   render() {
     this.image.update();
+    this.getMouseSpeed();
     if (!isMobile()) {
-      this.getMouseSpeed();
       this.customPass.uniforms.uMouse.value = this.followMouse;
       this.customPass.uniforms.uVelo.value = Math.min(this.targetSpeed, 0.05);
       this.targetSpeed *= 0.999;

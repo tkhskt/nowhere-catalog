@@ -25,31 +25,15 @@ export default class MobileMenu {
   }
 
   open() {
-    TM.to(this.$els.buttonLine1, {
-      duration: 0.3,
-      top: '20px',
-      rotate: 45,
-    });
-    TM.to(this.$els.buttonLine2, {
-      duration: 0.3,
-      bottom: '20px',
-      rotate: -45,
-    });
+    this.$els.buttonLine1.classList.add('line1--opened');
+    this.$els.buttonLine2.classList.add('line2--opened');
     this.openMenu();
     this.opened = true;
   }
 
   close() {
-    TM.to(this.$els.buttonLine1, {
-      duration: 0.3,
-      top: '14px',
-      rotate: 0,
-    });
-    TM.to(this.$els.buttonLine2, {
-      duration: 0.3,
-      bottom: '14px',
-      rotate: 0,
-    });
+    this.$els.buttonLine1.classList.remove('line1--opened');
+    this.$els.buttonLine2.classList.remove('line2--opened');
     this.closeMenu();
     this.opened = false;
   }
