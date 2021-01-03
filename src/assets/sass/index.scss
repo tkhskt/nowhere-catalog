@@ -185,7 +185,7 @@ body {
   &__text {
     position: relative;
     width: 72vw;
-    height: 75vh;
+    height: 75%;
     z-index: $z-bg_text;
     @include mq() {
       width: 90vw;
@@ -293,12 +293,12 @@ body {
 }
 
 .jacket-img {
-  height: 51vh;
+  height: 51%;
   width: 48vw;
   background: #ffffff;
   opacity: 0;
   @include mq() {
-    height: 60vh;
+    height: 60%;
     width: 70vw;
   }
 }
