@@ -3,17 +3,22 @@ const TerserPlugin = require('terser-webpack-plugin');
 const StatsPlugin = require('stats-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const webpack = require('webpack');
-const dotenv = require('dotenv');
+// const dotenv = require('dotenv');
+const DotenvWebpack = require('dotenv-webpack');
 
 module.exports = () => {
-  const env = dotenv.config().parsed;
+  // const env = dotenv.config().parsed;
   return {
     mode: 'production', // 本番用（開発ならdevelopment（圧縮されない））
     entry: ['@babel/polyfill', './src/assets/js/index.js'], // バンドル前のやつのエントリポイント
     devtool: 'inline-source-map',
     plugins: [
-      new webpack.DefinePlugin({
-        'process.env': JSON.stringify(env),
+      // new webpack.DefinePlugin({
+      //   'process.env': JSON.stringify(env),
+      // }),
+      new DotenvWebpack({
+        path: path.join(__dirname, '.env'),
+        systemvars: true,
       }),
       new StatsPlugin('stats.json', {
         chunkModules: true,
