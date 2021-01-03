@@ -15,10 +15,10 @@ module.exports = () => {
         path: path.join(__dirname, '.env'),
         systemvars: true,
       }),
-      new StatsPlugin('stats.json', {
-        chunkModules: true,
-      }),
-      new BundleAnalyzerPlugin(),
+      // new StatsPlugin('stats.json', {
+      //   chunkModules: true,
+      // }),
+      // new BundleAnalyzerPlugin(),
       new CompressionPlugin({
         test: /\.(css)|(js)$/,
         compressionOptions: {
