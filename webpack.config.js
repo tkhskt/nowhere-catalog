@@ -9,7 +9,7 @@ module.exports = () => {
   return {
     mode: 'production', // 本番用（開発ならdevelopment（圧縮されない））
     entry: ['@babel/polyfill', './src/assets/js/index.js'], // バンドル前のやつのエントリポイント
-    devtool: 'inline-source-map',
+    // devtool: 'inline-source-map', // 本番ビルドではコメントアウト必須(bundle.jsがめちゃくちゃでかくなる)
     plugins: [
       new DotenvWebpack({
         path: path.join(__dirname, '.env'),
