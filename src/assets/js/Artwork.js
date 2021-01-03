@@ -72,7 +72,7 @@ export default class Artwork {
   }
 
   setScreenSize() {
-    const main = document.querySelector('main');
+    const main = document.querySelector('.contents-container');
     main.style.width = window.innerWidth;
     main.style.height = window.innerHeight;
   }
