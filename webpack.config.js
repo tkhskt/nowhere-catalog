@@ -2,20 +2,15 @@ const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const StatsPlugin = require('stats-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-const webpack = require('webpack');
-// const dotenv = require('dotenv');
 const DotenvWebpack = require('dotenv-webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = () => {
-  // const env = dotenv.config().parsed;
   return {
     mode: 'production', // 本番用（開発ならdevelopment（圧縮されない））
     entry: ['@babel/polyfill', './src/assets/js/index.js'], // バンドル前のやつのエントリポイント
     devtool: 'inline-source-map',
     plugins: [
-      // new webpack.DefinePlugin({
-      //   'process.env': JSON.stringify(env),
-      // }),
       new DotenvWebpack({
         path: path.join(__dirname, '.env'),
         systemvars: true,
@@ -23,6 +18,7 @@ module.exports = () => {
       new StatsPlugin('stats.json', {
         chunkModules: true,
       }),
+      new BundleAnalyzerPlugin(),
       new CompressionPlugin({
         test: /\.(css)|(js)$/,
         compressionOptions: {

@@ -51,7 +51,6 @@
     "iOS >= 8"
   ],
   "dependencies": {
-    "animejs": "^3.2.1",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "firebase": "^8.1.2",
