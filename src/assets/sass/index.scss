@@ -405,6 +405,7 @@ body {
   @include borderText($color-gray-faded, 0.5px);
   @include mq() {
     font-size: 4vmax;
+    @include borderText($color-gray-faded, 1px);
   }
 }
 
@@ -690,7 +691,9 @@ body {
   }
   &__nowhere-wrapper {
     position: fixed;
+    top: 0;
     right: 0;
+    width: 15vh;
     will-change: transform;
   }
   &__nowhere-item {
