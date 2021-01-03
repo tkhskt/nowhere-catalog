@@ -134,6 +134,8 @@ gulp.task('watch', (done) => {
   done();
 });
 
+gulp.task('build', gulp.series('sass', 'frag', 'vert', 'webpack', 'copy'));
+
 // サーバー立ち上げ(doneするとerror)
 gulp.task('serve', () => {
   bs.init({
