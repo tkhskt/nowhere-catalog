@@ -181,7 +181,7 @@ body {
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   &__text {
     position: relative;
     width: 72vw;
@@ -287,7 +287,7 @@ body {
   align-items: center;
   justify-content: center;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   top: 0;
   z-index: $z-main;
 }
@@ -454,7 +454,7 @@ body {
   justify-content: center;
   overflow: hidden;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   top: 0;
   opacity: 0;
   display: none;
@@ -490,7 +490,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 100%;
     width: 100vw;
   }
   &__nav {
@@ -589,7 +589,7 @@ body {
 
 .content {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 }
 
 .album__text {
@@ -675,7 +675,7 @@ body {
       left: 0;
       top: 0;
       width: 100vw;
-      height: 100vh;
+      height: 100%;
       background-color: rgba(0, 0, 0, 0.54);
     }
     &__nowhere {
@@ -687,7 +687,7 @@ body {
     right: 0;
     background-color: $color-black;
     width: 80vw;
-    height: 100vh;
+    height: 100%;
   }
   &__nowhere-wrapper {
     position: fixed;

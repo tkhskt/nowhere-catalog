@@ -46,6 +46,7 @@ export default class Artwork {
         this.openDescription();
       });
     });
+    this.setScreenSize();
     this.title.setText(this.tracks[0].name);
     this.page = new Page(document.getElementById('page'), this.tracks.length);
     this.mobileMenu = new MobileMenu(
@@ -68,6 +69,12 @@ export default class Artwork {
     this.setSnsHover();
     this.image = new Image(document.querySelector('.main'), this.scene, this.textures);
     this.loop();
+  }
+
+  setScreenSize() {
+    const main = document.querySelector('main');
+    main.style.width = window.innerWidth;
+    main.style.height = window.innerHeight;
   }
 
   openDescription() {
@@ -192,6 +199,7 @@ export default class Artwork {
 
   resize() {
     this.setSize();
+    this.setScreenSize();
     this.image.resize();
     this.canvas.style.width = `${this.size.windowW}px`;
     this.canvas.style.height = `${this.size.windowH}px`;
@@ -201,7 +209,7 @@ export default class Artwork {
     this.renderer.setSize(this.size.windowW, this.size.windowH);
     this.composer.setSize(this.size.windowW, this.size.windowH);
     if (this.description != null) {
-      this.description.resize()
+      this.description.resize();
     }
   }
 
@@ -212,7 +220,8 @@ export default class Artwork {
   }
 
   scroll(e) {
-    if (this.changeTrackInProgress || this.description != null || this.openDescriptionInProgress) return;
+    if (this.changeTrackInProgress || this.description != null || this.openDescriptionInProgress)
+      return;
     const currentScroll = Math.max(this.prevScroll + e.deltaY, 0);
     if (Math.abs(e.deltaY) > window.innerHeight * 0.05) {
       // update track

@@ -61,7 +61,7 @@ export default class MobileMenu {
     this.modalAnim = new TimelineLite()
       .to(this.$els.menuWrapper, {
         duration: 0.5,
-        height: '100vh',
+        height: '100%',
       })
       .to(this.$els.menuList, {
         duration: 0.2,
