@@ -11,6 +11,7 @@
     "autoprefixer": "^10.0.2",
     "babel-loader": "^8.2.1",
     "browser-sync": "^2.26.13",
+    "compression-webpack-plugin": "^7.1.1",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
@@ -26,8 +27,11 @@
     "postcss": "^8.1.10",
     "prettier": "^2.2.0",
     "raw-loader": "^4.0.2",
+    "stats-webpack-plugin": "^0.7.0",
     "terser-webpack-plugin": "^5.0.3",
-    "webpack": "^5.7.0",
+    "webpack": "^5.11.1",
+    "webpack-bundle-analyzer": "^4.3.0",
+    "webpack-cli": "^4.3.1",
     "webpack-stream": "^6.1.1"
   },
   "scripts": {

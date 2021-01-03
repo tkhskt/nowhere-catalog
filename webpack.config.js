@@ -1,5 +1,7 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
+const StatsPlugin = require('stats-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
 
@@ -12,6 +14,15 @@ module.exports = () => {
     plugins: [
       new webpack.DefinePlugin({
         'process.env': JSON.stringify(env),
+      }),
+      new StatsPlugin('stats.json', {
+        chunkModules: true,
+      }),
+      new CompressionPlugin({
+        test: /\.(css)|(js)$/,
+        compressionOptions: {
+          level: 9,
+        },
       }),
     ],
     output: {
