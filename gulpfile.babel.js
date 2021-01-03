@@ -56,6 +56,14 @@ gulp.task('sass', () => {
     .pipe(bs.stream());
 });
 
+gulp.task('favicon', () => {
+  return gulp
+    .src(srcDir + '/static/*.+(png|svg|webmanifest|ico|xml)')
+    .pipe(plumber())
+    .pipe(gulp.dest('dist'))
+    .pipe(bs.stream());
+});
+
 // vertをコピー
 gulp.task('vert', () => {
   return gulp
@@ -134,7 +142,10 @@ gulp.task('watch', (done) => {
   done();
 });
 
-gulp.task('build', gulp.series('sass', 'frag', 'vert', 'font', 'imagemin', 'webpack', 'copy'));
+gulp.task(
+  'build',
+  gulp.series('sass', 'frag', 'vert', 'font', 'imagemin', 'webpack', 'copy', 'favicon')
+);
 
 // サーバー立ち上げ(doneするとerror)
 gulp.task('serve', () => {
