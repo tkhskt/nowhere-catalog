@@ -111,24 +111,17 @@ export default class Artwork {
       passive: true,
     });
     window.addEventListener('touchend', this.onTouchEnd.bind(this));
-    window.addEventListener('touchmove', this.onTouchMove.bind(this), {
-      passive: true,
-    });
   }
 
   onTouchStart(e) {
     this.startY = e.touches[0].pageY;
   }
-  onTouchMove(e) {
-    if (e.changedTouches[0].pageY - this.startY > 15) {
-      this.touch = true;
-    }
-  }
+
   onTouchEnd(e) {
     const endY = e.changedTouches[0].pageY;
-    this.touch = false;
     if (Math.abs(endY - this.startY) > 30) {
-      this.scroll({ deltaY: (window.innerHeight * endY) / Math.abs(endY) });
+      const deltaY = -(window.innerHeight * (endY - this.startY)) / Math.abs(endY - this.startY);
+      this.scroll({ deltaY: deltaY });
     }
   }
 

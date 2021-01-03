@@ -38,7 +38,7 @@ module.exports = () => {
           extractComments: 'all', // コメント削除
           terserOptions: {
             compress: {
-              drop_console: false, // console.log削除
+              drop_console: true, // console.log削除
             },
           },
         }),
