@@ -1,11 +1,23 @@
 import { TweenLite as TM, TimelineLite } from 'gsap/dist/gsap';
 
 export default class Loading {
-  constructor($el) {
+  constructor($el, width, height) {
     this.$els = {
       background: $el,
       title: $el.querySelector('.title'),
+      filter: $el.querySelector('.title__filter'),
     };
+    this.setSize(width, height);
+    this.$els.filter.style.animation = 'show 0.5s linear forwards 0.2s;';
+    TM.to(this.$els.filter, {
+      duration: 0.5,
+      width: 0,
+    });
+  }
+
+  setSize(width, height) {
+    this.$els.background.style.width = width;
+    this.$els.background.style.height = height;
   }
 
   fadeOut() {

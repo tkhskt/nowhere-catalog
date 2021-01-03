@@ -37,7 +37,11 @@ export default class Artwork {
 
     this.canvas = document.getElementById('canvas');
     const title = document.getElementById('track-name');
-    this.loading = new Loading(document.querySelector('.loading'));
+    this.loading = new Loading(
+      document.querySelector('.loading'),
+      window.innerWidth,
+      window.innerHeight
+    );
     this.title = new Title(title, () => {
       if (this.changeTextInProgress) return;
       this.openDescriptionInProgress = true;
@@ -75,6 +79,7 @@ export default class Artwork {
     const main = document.querySelector('.contents-container');
     main.style.width = window.innerWidth;
     main.style.height = window.innerHeight;
+    this.loading.setSize(window.innerWidth, window.innerHeight);
   }
 
   openDescription() {

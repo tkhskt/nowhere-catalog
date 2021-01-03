@@ -1,5 +1,6 @@
 const { default: axios } = require('axios');
 import RollingText from './RollingText';
+import { isMobile } from './utils';
 import { TweenLite as TM } from 'gsap/dist/gsap';
 
 export default class Description {
@@ -98,6 +99,9 @@ export default class Description {
   }
 
   hoverClose() {
+    if (isMobile()) {
+      return;
+    }
     if (this.line1Anim != null && this.line2Anim != null) {
       this.line1Anim.kill();
       this.line2Anim.kill();
@@ -113,6 +117,9 @@ export default class Description {
   }
 
   leaveClose() {
+    if (isMobile()) {
+      return;
+    }
     if (this.line1Anim != null && this.line2Anim != null) {
       this.line1Anim.kill();
       this.line2Anim.kill();
@@ -128,6 +135,9 @@ export default class Description {
   }
 
   hoverLink() {
+    if (isMobile()) {
+      return;
+    }
     this.rollingText.hover();
     if (this.linkLineAnim != null) {
       this.linkLineAnim.kill();
@@ -141,6 +151,9 @@ export default class Description {
   }
 
   leaveLink() {
+    if (isMobile()) {
+      return;
+    }
     this.rollingText.leave();
     if (this.linkLineAnim != null) {
       this.linkLineAnim.kill();
