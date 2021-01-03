@@ -1,4 +1,4 @@
-import { TimelineMax, Linear } from 'gsap/all';
+import { TimelineLite, Linear } from 'gsap/dist/gsap';
 
 export default class RollingText {
   constructor($el) {
@@ -15,7 +15,7 @@ export default class RollingText {
   }
 
   rolling() {
-    const infinite = new TimelineMax({ repeat: -1, paused: true });
+    const infinite = new TimelineLite({ repeat: -1, paused: true });
     const time = 15;
 
     this.$els.wrapper.appendChild(this.$els.clonedText);

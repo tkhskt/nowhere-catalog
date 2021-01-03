@@ -1,6 +1,6 @@
 const { default: axios } = require('axios');
 import RollingText from './RollingText';
-import { TweenMax as TM } from 'gsap/all';
+import { TweenLite as TM } from 'gsap/dist/gsap';
 
 export default class Description {
   constructor(album, number, $el, loading, onHide) {
@@ -58,7 +58,7 @@ export default class Description {
     this.$els.container.style.opacity = 1;
     this.$els.container.style.display = 'flex';
     this.$els.scrollWrapper.scrollTop = 0;
-    this.loading.slideOut(() => { });
+    this.loading.slideOut(() => {});
   }
 
   setText(tracks) {
@@ -84,7 +84,7 @@ export default class Description {
       listItem.innerText = track.track_number + '. ' + track.name;
       listItem.classList.add('list_item');
       this.$els.list.appendChild(listItem);
-    })
+    });
   }
 
   clearTracks() {
@@ -105,11 +105,11 @@ export default class Description {
     this.line1Anim = TM.to(this.$els.closeLine1, {
       duration: 0.3,
       rotate: -30,
-    })
+    });
     this.line2Anim = TM.to(this.$els.closeLine2, {
       duration: 0.3,
       rotate: 120,
-    })
+    });
   }
 
   leaveClose() {
@@ -120,11 +120,11 @@ export default class Description {
     this.line1Anim = TM.to(this.$els.closeLine1, {
       duration: 0.3,
       rotate: 45,
-    })
+    });
     this.line2Anim = TM.to(this.$els.closeLine2, {
       duration: 0.3,
       rotate: 45,
-    })
+    });
   }
 
   hoverLink() {
@@ -136,8 +136,8 @@ export default class Description {
     this.linkLineAnim = TM.to(this.$els.linkLine, {
       duration: 0.3,
       left: '0',
-      width: '100%'
-    })
+      width: '100%',
+    });
   }
 
   leaveLink() {
@@ -164,8 +164,8 @@ export default class Description {
         this.resetElem();
         this.$els.container.style.display = 'none';
         this.onHide();
-      }
-    })
+      },
+    });
   }
 
   resetElem() {

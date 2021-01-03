@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { TweenMax as TM } from 'gsap/all';
+import { TweenLite as TM } from 'gsap/dist/gsap';
 import vertexShader from '../glsl/shader.vert';
 import fragmentShader from '../glsl/shader.frag';
 import { isMobile } from './utils';
@@ -124,12 +124,12 @@ export default class Image {
   events
   --*/
 
-  onPointerEnter() { }
+  onPointerEnter() {}
 
-  onPointerLeave() { }
+  onPointerLeave() {}
 
   onMouseMove(x, y) {
-    if(!isMobile()) {
+    if (!isMobile()) {
       this.mouse.x = x;
       this.mouse.y = y;
     }
@@ -151,7 +151,7 @@ export default class Image {
 
   update() {
     if (isMobile()) {
-      return
+      return;
     }
     this.uniforms.u_mouse.value = this.mouse;
   }

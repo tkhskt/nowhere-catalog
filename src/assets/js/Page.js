@@ -1,4 +1,4 @@
-import { TweenMax as TM } from 'gsap/all';
+import { TweenLite as TM } from 'gsap/dist/gsap';
 
 export default class Page {
   constructor($el, pageCount) {

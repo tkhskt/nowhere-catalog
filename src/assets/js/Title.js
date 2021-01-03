@@ -1,4 +1,4 @@
-import { TweenMax as TM, Expo } from 'gsap/all';
+import { TweenLite as TM, Expo } from 'gsap/dist/gsap';
 
 export default class Title {
   constructor($el, onClick) {

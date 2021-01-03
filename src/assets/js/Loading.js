@@ -1,4 +1,4 @@
-import { TweenMax as TM, TimelineMax } from 'gsap/all';
+import { TweenLite as TM, TimelineLite } from 'gsap/dist/gsap';
 
 export default class Loading {
   constructor($el) {
@@ -25,7 +25,7 @@ export default class Loading {
     this.$els.background.style.display = 'flex';
     this.$els.background.style.left = '0';
     this.$els.background.style.right = 'auto';
-    var tl = new TimelineMax({
+    var tl = new TimelineLite({
       onComplete: () => {
         onComplete();
       },
@@ -47,7 +47,7 @@ export default class Loading {
     this.$els.background.style.opacity = '1';
     this.$els.background.style.left = 'auto';
     this.$els.background.style.right = '0';
-    var tl = new TimelineMax({
+    var tl = new TimelineLite({
       onComplete: () => {
         onComplete();
       },
