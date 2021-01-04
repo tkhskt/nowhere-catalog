@@ -5,7 +5,7 @@ import { TweenLite as TM } from 'gsap/dist/gsap';
 
 export default class Description {
   constructor(album, number, $el, loading, onHide) {
-    this.all = number.all + 1;
+    this.all = number.all;
     this.current = number.current + 1;
     this.album = album;
     this.loading = loading;
